@@ -30,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth > 600) {
+        if (MediaQuery.of(context).size.width > 600) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
