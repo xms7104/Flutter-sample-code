@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './banner.dart';
+import './container.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Flutter RWD',
-      home: MyHomePage(title: 'Flutter RWD'),
+      title: 'Flutter import Component',
+      home: MyHomePage(title: 'Flutter import Component'),
     );
   }
 }
@@ -30,44 +32,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        if (MediaQuery.of(context).size.width > 600) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildButton(),
-              _buildButton(),
-              _buildButton(),
-            ],
-          );
-        } else {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildButton(),
-              _buildButton(),
-              _buildButton(),
-            ],
-          );
-        }
+        return Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            SizedBox(
+              height: 50,
+            ),
+            Expanded(flex: 1, child: BannerPage()),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(flex: 1, child: ContainerPage()),
+          ],
+        ));
       },
-    );
-  }
-
-  Widget _buildButton() {
-    return Container(
-      width: 100,
-      height: 100,
-      color: Colors.blue,
-      child: const Center(
-        child: Text(
-          'Button',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
     );
   }
 }
