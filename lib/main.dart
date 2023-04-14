@@ -1,74 +1,70 @@
 import 'package:flutter/material.dart';
-import './api.dart';
+import 'package:flutter/widgets.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+//import files for page class
+import 'statefull_page.dart';
+import 'stateless_page.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+void main() => runApp(MainApp());
 
-  // This widget is the root of your application.
+class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter RWD',
-      home: MyHomePage(title: 'Flutter RWD'),
+    return MaterialApp(
+      home: Home(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+class Home extends StatelessWidget {
+  String countryname = "Nepal";
+  //variable to pass in another page, you can have any other datas as well
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth > 600) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildButton(),
-              _buildButton(),
-              _buildButton(),
-            ],
-          );
-        } else {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildButton(),
-              _buildButton(),
-              _buildButton(),
-            ],
-          );
-        }
-      },
-    );
-  }
-
-  Widget _buildButton() {
-    return Container(
-      width: 100,
-      height: 100,
-      color: Colors.blue,
-      child: const Center(
-        child: Text(
-          'Button',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
+    return Scaffold(
+        appBar: AppBar(
+            title: Text("Transfer Data to Another Page"),
+            backgroundColor: Colors.redAccent),
+        body: Container(
+            alignment: Alignment.center, //align to center
+            height: 250, //height to 250
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    child: OutlinedButton(
+                  onPressed: () {
+                    //onpress action for button
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return StateLessPage(
+                          var1: "Kathmandu", var2: countryname, int1: 12);
+                    })); //Navigate to another page (Stateless Page) using Navigator.push()
+                    //when you use {} in constructor, then have to mention
+                    //parameter name as well like var1: "Kathmandu";
+                    //if {} not used, you have to use (Kathmandu, countryname, 12); like this
+                  },
+                  child: Text(
+                      "Go to Stateless Page"), //background color is darker, so set darker brightness
+                )),
+                Container(
+                    child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return StatefulPage(
+                        var1: "Kathmandu",
+                        var2: countryname,
+                        int1: 12,
+                        var3: '',
+                      );
+                    })); //Navigate to another page (Stateful page)
+                  },
+                  child: Text(
+                      "Go to Statefull Page"), //background color is darker, so set darker brightness
+                ))
+              ],
+            )));
   }
 }
